@@ -1,20 +1,93 @@
-<!doctype html>
-<html lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-<head th:replace="/fragments/head :: head"></head>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.4.2</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
 
-<body>
-    <nav th:replace="/fragments/nav :: nav-front"></nav>
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <div th:replace="/fragments/categories"></div>
-            <div class="col">
-                <div class="col-7" th:utext="${page.content}"></div>
-                <div class="col"></div>
-            </div>
-        </div>
-    </div>
-    <div th:replace="/fragments/footer :: footer"></div>
-</body>
+  <groupId>com.marufhassan</groupId>
+  <artifactId>restclient</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>restclient</name>
+  <description>Demo project for Spring Boot</description>
 
-</html>
+  <properties>
+    <java.version>11</java.version>
+    <lombok.version>1.18.20</lombok.version>
+  </properties>
+
+  <dependencies>
+    <!-- Add other dependencies as needed -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!-- Exclude Lombok from testCompile -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Lombok Dependency -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Other dependencies -->
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- Configure maven-compiler-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <configuration>
+              <compilerArgs>
+                <arg>-J--add-opens</arg>
+                <arg>-J>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <configuration>
+              <compilerArgs>
+                <arg>-J--add-opens</arg>
+                <arg>-J>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

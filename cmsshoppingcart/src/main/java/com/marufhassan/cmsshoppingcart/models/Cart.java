@@ -17,4 +17,24 @@ public class Cart {
         this.quantity = quantity;
         this.image = image;
     }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getPrice() {
+        return price;
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    public String getImage() {
+        return image;
+    }
 }

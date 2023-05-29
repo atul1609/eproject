@@ -75,9 +75,9 @@ public class AdminProductsController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid Product product, 
+    public String addSubmit(@Valid Product product, 
             BindingResult bindingResult, 
-            MultipartFile file, 
+            @RequestParam("file") MultipartFile file, 
             RedirectAttributes redirectAttributes, 
             Model model) throws IOException{
         List<Category> categories = categoryRepo.findAll();
@@ -119,24 +119,22 @@ public class AdminProductsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable int id, Model model) {
+    public String editForm(@PathVariable int id, Model model) {
         Product product = productRepo.getOne(id);
         List<Category> categories = categoryRepo.findAll();
 
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
-        return "/admin/products/edit";
+        return "admin/products/edit";
     }
 
-    @PostMapping("/edit")
-    public String edit(@Valid Product product, 
-            BindingResult bindingResult, 
-            MultipartFile file, 
-            RedirectAttributes redirectAttributes, 
-            Model model) throws IOException{
+    @PostMapping("/edit/{id}")
+    public String editSubmit(@PathVariable int id, @Valid Product product,
+            BindingResult bindingResult, @RequestParam("file") MultipartFile file,
+            RedirectAttributes redirectAttributes, Model model) throws IOException {
         
-        Product currentProduct = productRepo.getOne(product.getId());
-
+        Product currentProduct = productRepo.getOne(id);
+        
         List<Category> categories = categoryRepo.findAll();
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categories);
@@ -182,7 +180,7 @@ public class AdminProductsController {
             }
             productRepo.save(product);
         }
-        return "redirect:/admin/products/edit/" + product.getId();
+        return "redirect:/admin/products/edit/" + id;
     }
 
     @GetMapping("/delete/{id}")
